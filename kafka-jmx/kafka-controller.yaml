@@ -1,0 +1,179 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kafka-controller-1
+spec:
+  replicas: 1
+  selector:
+    app: kafka-1
+  template:
+    metadata:
+      labels:
+        app: kafka-1
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: kafka-1
+        image: 459369257748.dkr.ecr.us-west-2.amazonaws.com/kafka-jmx:latest
+        ports:
+        - containerPort: 9092
+        - containerPort: 7203
+        env:
+        - name: KAFKA_ADVERTISED_PORT
+          value: "9092"
+        - name: KAFKA_ADVERTISED_HOST_NAME
+          value: kafka-service-1
+        - name: ZOOKEEPER_CONNECTION_STRING
+          value: zoo1:2181,zoo2:2181,zoo3:2181
+        - name: KAFKA_JMX_PORT
+          value: "7203"
+        - name: JAVA_RMI_SERVER_HOSTNAME
+          value: kafka-service-1
+        - name: KAFKA_BROKER_ID
+          value: "-1"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://kafka-service-1:9092"
+        - name: port1
+          value: "7203"
+        - name: url1
+          value: "kafka-service-1"
+        - name: node_alias
+          value: "kafka-service-1"
+        - name: influxUrl
+          value: "http://10.244.1.6:8086" 
+        - name: influxDb
+          value: "kafka"
+        - name: influxUser
+          value: "admin"
+        - name: influxPwd
+          value: "admin"
+        volumeMounts:
+        - mountPath: /data
+          name: kv-1
+      volumes:
+      - name: kv-1
+        awsElasticBlockStore:
+          volumeID: vol-1f7b8d97
+          fsType: ext4
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kafka-controller-2
+spec:
+  replicas: 1
+  selector:
+    app: kafka-2
+  template:
+    metadata:
+      labels:
+        app: kafka-2
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: kafka-2
+        image: 459369257748.dkr.ecr.us-west-2.amazonaws.com/kafka-jmx:latest
+        ports:
+        - containerPort: 9092
+        - containerPort: 7203
+        env:
+        - name: KAFKA_ADVERTISED_PORT
+          value: "9092"
+        - name: KAFKA_ADVERTISED_HOST_NAME
+          value: kafka-service-2
+        - name: ZOOKEEPER_CONNECTION_STRING
+          value: zoo1:2181,zoo2:2181,zoo3:2181
+        - name: KAFKA_JMX_PORT
+          value: "7203"
+        - name: JAVA_RMI_SERVER_HOSTNAME
+          value: kafka-service-2
+        - name: KAFKA_BROKER_ID
+          value: "-1"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://kafka-service-2:9092"
+        - name: port1
+          value: "7203"
+        - name: url1
+          value: "kafka-service-2"
+        - name: node_alias
+          value: "kafka-service-2"
+        - name: influxUrl
+          value: "http://10.244.1.6:8086" 
+        - name: influxDb
+          value: "kafka"
+        - name: influxUser
+          value: "admin"
+        - name: influxPwd
+          value: "admin"
+        volumeMounts:
+        - mountPath: /data
+          name: kv-2
+      volumes:
+      - name: kv-2
+        awsElasticBlockStore:
+          volumeID: vol-ec7b8d64
+          fsType: ext4
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kafka-controller-3
+spec:
+  replicas: 1
+  selector:
+    app: kafka-3
+  template:
+    metadata:
+      labels:
+        app: kafka-3
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: kafka-3
+        image: 459369257748.dkr.ecr.us-west-2.amazonaws.com/kafka-jmx:latest
+        ports:
+        - containerPort: 9092
+        - containerPort: 7203
+        env:
+        - name: KAFKA_ADVERTISED_PORT
+          value: "9092"
+        - name: KAFKA_ADVERTISED_HOST_NAME
+          value: kafka-service-3
+        - name: ZOOKEEPER_CONNECTION_STRING
+          value: zoo1:2181,zoo2:2181,zoo3:2181
+        - name: KAFKA_JMX_PORT
+          value: "7203"
+        - name: JAVA_RMI_SERVER_HOSTNAME
+          value: kafka-service-3
+        - name: KAFKA_BROKER_ID
+          value: "-1"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://kafka-service-3:9092"
+        - name: port1
+          value: "7203"
+        - name: url1
+          value: "kafka-service-3"
+        - name: node_alias
+          value: "kafka-service-3"
+        - name: influxUrl
+          value: "http://10.244.1.6:8086" 
+        - name: influxDb
+          value: "kafka"
+        - name: influxUser
+          value: "admin"
+        - name: influxPwd
+          value: "admin"
+        volumeMounts:
+        - mountPath: /data
+          name: kv-3
+      volumes:
+      - name: kv-3
+        awsElasticBlockStore:
+          volumeID: vol-10a54798
+          fsType: ext4

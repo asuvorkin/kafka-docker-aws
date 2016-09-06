@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secor-service
+  labels:
+    app: secor
+spec:
+  ports:
+  - port: 9092
+    name: secor-port
+    targetPort: 9092
+    protocol: TCP
+  - port: 9999
+    name: admin-port
+    targetPort: 9999
+    protocol: TCP
+  selector:
+    app: secor
+  type: LoadBalancer
+
